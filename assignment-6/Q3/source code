@@ -1,0 +1,103 @@
+#include<iostream>
+using namespace std;
+
+class DNode{
+public:
+    int data;
+    DNode *prev,*next;
+    DNode(int v){ data=v; prev=next=NULL; }
+};
+
+class DLL{
+public:
+    DNode *head;
+    DLL(){ head=NULL; }
+
+    void insertEnd(int v){
+        DNode *t=new DNode(v);
+        if(!head){ head=t; return; }
+        DNode *p=head;
+        while(p->next) p=p->next;
+        p->next=t;
+        t->prev=p;
+    }
+
+    int size(){
+        int c=0;
+        DNode *p=head;
+        while(p){ c++; p=p->next; }
+        return c;
+    }
+};
+
+class CNode{
+public:
+    int data;
+    CNode *next;
+    CNode(int v){ data=v; next=NULL; }
+};
+
+class CLL{
+public:
+    CNode *head;
+    CLL(){ head=NULL; }
+
+    void insertEnd(int v){
+        CNode *t=new CNode(v);
+        if(!head){
+            head=t;
+            t->next=t;
+            return;
+        }
+        CNode *p=head;
+        while(p->next!=head) p=p->next;
+        p->next=t;
+        t->next=head;
+    }
+
+    int size(){
+        if(!head) return 0;
+        int c=1;
+        CNode *p=head->next;
+        while(p!=head){
+            c++;
+            p=p->next;
+        }
+        return c;
+    }
+};
+
+int main(){
+    DLL list1;
+    CLL list2;
+    int ch,v;
+
+    while(true){
+        cout<<"\n1.Insert DLL\n2.Insert CLL\n3.Size DLL\n4.Size CLL\n5.Exit\nEnter choice: ";
+        cin>>ch;
+
+        if(ch==1){
+            cout<<"Enter value: ";
+            cin>>v;
+            list1.insertEnd(v);
+        }
+        else if(ch==2){
+            cout<<"Enter value: ";
+            cin>>v;
+            list2.insertEnd(v);
+        }
+        else if(ch==3){
+            cout<<"Size of Doubly Linked List= "<<list1.size()<<endl;
+        }
+        else if(ch==4){
+            cout<<"Size of Circular Linked List= "<<list2.size()<<endl;
+        }
+        else if(ch==5){
+            break;
+        }
+        else{
+            cout<<"Invalid choice!\n";
+        }
+    }
+    return 0;
+}
